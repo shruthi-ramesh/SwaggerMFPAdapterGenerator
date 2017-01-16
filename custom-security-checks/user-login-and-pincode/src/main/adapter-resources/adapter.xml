@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       © Copyright 2016 IBM Corp.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+           http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<mfp:adapter name="userLoginAndPincode"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:mfp="http://www.ibm.com/mfp/integration"
+             xmlns:http="http://www.ibm.com/mfp/integration/http">
+
+    <displayName>User Login and Pincode security checks</displayName>
+
+    <securityCheckDefinition name="UserLogin" class="com.github.mfpdev.sample.stepup.UserLoginSecurityCheck">
+        <property name="successStateExpirationSec" defaultValue="120" type="integer"
+                  displayName="Login duration"
+                  description="Duration of successful login in seconds"/>
+        <property name="maxAttempts" defaultValue="3" type="integer"
+                  displayName="Max attempts"
+                  description="Max number of attempts"/>
+        <property name="blockedStateExpirationSec" defaultValue="240" type="integer"
+                  displayName="Blocking duration"
+                  description="Duration of the blocking interval in seconds"/>
+    </securityCheckDefinition>
+
+    <securityCheckDefinition name="PinCode" class="com.github.mfpdev.sample.stepup.PinCodeSecurityCheck">
+        <property name="successStateExpirationSec" defaultValue="1800" type="integer"
+                  displayName="Login duration"
+                  description="Duration of successful login in seconds"/>
+        <property name="maxAttempts" defaultValue="2" type="integer"
+                  displayName="Max attempts"
+                  description="Max number of attempts"/>
+        <property name="blockedStateExpirationSec" defaultValue="120" type="integer"
+                  displayName="Blocking duration"
+                  description="Duration of the blocking interval in seconds"/>
+    </securityCheckDefinition>
+</mfp:adapter>
