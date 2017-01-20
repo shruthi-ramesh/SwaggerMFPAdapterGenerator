@@ -39,12 +39,6 @@
         <jgitflowDevelopBranchName>develop</jgitflowDevelopBranchName>
     </properties>
 
-    <modules>
-        <module>mfp-adapters-spring-integration</module>
-        <module>mfp-adapters-swagger-codegen</module>
-        <module>samples</module>
-    </modules>
-
     <repositories>
         <repository>
             <id>jcenter-snapshots</id>
@@ -307,32 +301,7 @@
                     </flowInitContext>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>com.mycila</groupId>
-                <artifactId>license-maven-plugin</artifactId>
-                <version>2.5</version>
-                <configuration>
-                    <header>apache.txt</header>
-                    <properties>
-                        <owner>IBM</owner>
-                        <project.inceptionYear>2016</project.inceptionYear>
-                    </properties>
-                    <excludes>
-                        <exclude>apache.txt</exclude>
-                        <exclude>**/.gitignore</exclude>
-                        <exclude>**/README</exclude>
-                        <exclude>**/src/test/resources/**</exclude>
-                        <exclude>**/src/main/resources/**</exclude>
-                    </excludes>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+            
         </plugins>
     </build>
 
