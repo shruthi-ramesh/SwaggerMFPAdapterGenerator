@@ -1,0 +1,10 @@
+{
+  "groupId": "com.ibm.watsonGetAdapter",
+  "artifactId": "watsonGetAdapter",
+  "additionalProperties": {
+    "serviceFactoryClassname": "watsonAdapterGetServiceFactory",
+    "adapterApplicationClassname": "watsonGetAdapterApplication"
+  },
+  "artifactVersion": "1.2.0",
+  "library": "feign"
+}
