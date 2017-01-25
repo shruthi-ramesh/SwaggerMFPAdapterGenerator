@@ -22,7 +22,7 @@
     <groupId>com.github.mfpdev</groupId>
     <artifactId>mfp-adapters-extensions</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <properties>
         <dependency-dagger-version>2.0</dependency-dagger-version>
@@ -124,6 +124,11 @@
             <dependency>
                 <groupId>com.ibm.mfp</groupId>
                 <artifactId>mfp-adapters-spring-integration</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+             <dependency>
+                <groupId>com.github.mfpdev</groupId>
+                <artifactId>mfp-adapters-swagger-codegen-modified</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -301,7 +306,32 @@
                     </flowInitContext>
                 </configuration>
             </plugin>
-            
+            <plugin>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <header>apache.txt</header>
+                    <properties>
+                        <owner>IBM</owner>
+                        <project.inceptionYear>2016</project.inceptionYear>
+                    </properties>
+                    <excludes>
+                        <exclude>apache.txt</exclude>
+                        <exclude>**/.gitignore</exclude>
+                        <exclude>**/README</exclude>
+                        <exclude>**/src/test/resources/**</exclude>
+                        <exclude>**/src/main/resources/**</exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 

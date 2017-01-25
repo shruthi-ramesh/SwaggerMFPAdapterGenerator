@@ -19,7 +19,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.mfpdev</groupId>
-  <artifactId>mfp-adapters-swagger-codegen</artifactId>
+  <artifactId>mfp-adapters-swagger-codegen-modified</artifactId>
   <version>1.0.0</version>
   <packaging>jar</packaging>
   <name>MobileFirst Adapter Swagger-Codegen Extension</name>
@@ -106,26 +106,6 @@
           <source>1.6</source>
           <target>1.6</target>
         </configuration>
-      </plugin>
-      <plugin>
-          <groupId>io.swagger</groupId>
-          <artifactId>swagger-codegen-maven-plugin</artifactId>
-          <version>2.2.1</version>
-          <executions>
-              <execution>
-                  <goals>
-                      <goal>generate</goal>
-                  </goals>
-                  <configuration>
-                      <inputSpec>/Users/shruthikr/MyDocuments/projects/SwaggerMFPAdapter/watsonmessage.json</inputSpec>
-                      <language>java</language>
-                      <configOptions>
-                      <sourceFolder>src/gen/java/main</sourceFolder>
-                      <output>../watsonclient</output>
-                      </configOptions>
-                  </configuration>
-              </execution>
-          </executions>
       </plugin>
     </plugins>
   </build>

@@ -1,0 +1,402 @@
+{
+  "swagger": "2.0",
+  "basePath": "/conversation/api",
+  "info": {
+    "version": "1.0",
+    "title": "Conversation service",
+    "description": "The IBM Watson&trade; Conversation service"
+  },
+  "securityDefinitions": {},
+  "security": [],
+  "externalDocs": {
+    "description": "For more information about this service, see the documentation:",
+    "url": "http://www.ibm.com/watson/developercloud/doc/conversation"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "tags": [
+    {
+      "name": "workspaces"
+    },
+    {
+      "name": "message"
+    }
+  ],
+  "paths": {
+    "/message": {
+      "post": {
+        "summary": "Get a response to a user's input",
+        "description": "",
+        "tags": [
+          "message"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "workspace_id",
+            "required": true,
+            "type": "string",
+            "default": "0a0c06c1-8e31-4655-9067-58fcac5134fc",
+            "description": "Unique identifier of the workspace."
+          },
+          {
+            "in": "query",
+            "name": "version",
+            "required": true,
+            "default": "2016-09-20",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "type": "string",
+            "description": "Release date of the API version in YYYY-MM-DD format."
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": false,
+            "description": "The user's input, with optional intents, entities, and other properties from the response.",
+            "schema": {
+              "$ref": "#/definitions/MessageRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request",
+            "schema": {
+              "$ref": "#/definitions/MessageResponse"
+            },
+            "examples": {
+              "application/json": {
+                "input": {
+                  "text": "Turn on the lights"
+                },
+                "alternate_intents": true,
+                "context": {
+                  "conversation_id": "1b7b67c0-90ed-45dc-8508-9488bc483d5b",
+                  "system": {
+                    "dialog_stack": [
+                      {
+                        "dialog_node": "root"
+                      }
+                    ],
+                    "dialog_turn_counter": 2,
+                    "dialog_request_counter": 2
+                  }
+                },
+                "entities": [
+                  {
+                    "entity": "appliance",
+                    "location": [
+                      12,
+                      18
+                    ],
+                    "value": "light"
+                  }
+                ],
+                "intents": [
+                  {
+                    "intent": "turn_on",
+                    "confidence": 0.9743563172970104
+                  },
+                  {
+                    "intent": "turn_up",
+                    "confidence": 0.024898449095231066
+                  },
+                  {
+                    "intent": "out_of_scope",
+                    "confidence": 0.00074523360776
+                  }
+                ],
+                "output": {
+                  "log_messages": [
+                    {
+                      "level": "warn",
+                      "msg": "No dialog node matched for the input at a root level!"
+                    }
+                  ],
+                  "text": [
+                    "Ok. Turning on the light"
+                  ],
+                  "nodes_visited": [
+                    "node_1_1467232431348",
+                    "node_2_1467232480480",
+                    "node_4_1467232602708"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Invalid request"
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Resource not found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Context": {
+      "type": "object",
+      "properties": {
+        "conversation_id": {
+          "type": "string",
+          "description": "The unique identifier of the conversation."
+        },
+        "system": {
+          "$ref": "#/definitions/SystemResponse",
+          "description": "Information about the dialog."
+        }
+      }
+    },
+    "EntityResponse": {
+      "type": "object",
+      "properties": {
+        "entity": {
+          "type": "string",
+          "description": "The recognized entity from a term in the input."
+        },
+        "location": {
+          "type": "array",
+          "description": "Zero-based character offsets that indicate where the entity value begins and ends in the input text.",
+          "items": {
+            "type": "integer"
+          },
+          "maxItems": 2,
+          "minItems": 2
+        },
+        "value": {
+          "type": "string",
+          "description": "The term in the input text that was recognized."
+        }
+      },
+      "example": {
+        "entity": "appliance",
+        "location": [
+          12,
+          18
+        ],
+        "value": "light",
+        "metadata": {}
+      }
+    },
+    "InputData": {
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "The user's input."
+        }
+      }
+    },
+    "Intent": {
+      "type": "object",
+      "description": "An array of name-confidence pairs for the user input.",
+      "properties": {
+        "intent": {
+          "type": "string",
+          "description": "The name of the recognized intent."
+        },
+        "confidence": {
+          "type": "number",
+          "format": "double",
+          "description": "A decimal percentage that represents the confidence that Watson has in this intent."
+        }
+      }
+    },
+    "LogMessageResponse": {
+      "type": "object",
+      "description": "Log message details",
+      "properties": {
+        "level": {
+          "type": "string",
+          "description": "Severity of the message",
+          "enum": [
+            "info",
+            "error",
+            "warn"
+          ]
+        },
+        "msg": {
+          "type": "string",
+          "description": "The message"
+        }
+      }
+    },
+    "MessageRequest": {
+      "type": "object",
+      "properties": {
+        "input": {
+          "$ref": "#/definitions/InputData",
+          "description": "The input text."
+        },
+        "alternate_intents": {
+          "type": "boolean",
+          "description": "Whether to return more than one intent. Set to `true` to return all matching intents",
+          "default": false
+        },
+        "context": {
+          "$ref": "#/definitions/Context",
+          "description": "Include the context object from the previous response when you send multiple requests for the same conversation."
+        },
+        "entities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EntityResponse"
+          },
+          "description": "Include the entities from the previous response when they do not need to change and to prevent Watson from trying to identify them."
+        },
+        "intents": {
+          "type": "array",
+          "description": "Include the intents from the previous response when they do not need to change and to prevent Watson from trying to identify them.",
+          "items": {
+            "$ref": "#/definitions/Intent"
+          }
+        },
+        "output": {
+          "$ref": "#/definitions/OutputData",
+          "description": "System output. Include the output from the previous response when you have several requests within the same Dialog turn to pass back in the intermediate information."
+        }
+      },
+      "required": [
+        "input"
+      ],
+      "example": {
+        "input": {
+          "text": "Turn on the lights"
+        },
+        "alternate_intents": true
+      }
+    },
+    "MessageResponse": {
+      "type": "object",
+      "required": [
+        "context",
+        "intents",
+        "entities",
+        "input",
+        "output"
+      ],
+      "properties": {
+        "input": {
+          "$ref": "#/definitions/InputData",
+          "description": "User's input from the request."
+        },
+        "context": {
+          "$ref": "#/definitions/Context",
+          "description": "State information for the conversation."
+        },
+        "entities": {
+          "type": "array",
+          "description": "Terms from the request that are identified as entities.",
+          "items": {
+            "$ref": "#/definitions/EntityResponse"
+          }
+        },
+        "intents": {
+          "type": "array",
+          "description": "Terms from the request that are identified as intents.",
+          "items": {
+            "$ref": "#/definitions/Intent"
+          }
+        },
+        "output": {
+          "$ref": "#/definitions/OutputData",
+          "description": "Includes the response to the user, the nodes that were hit, and messages from the log."
+        }
+      }
+    },
+    "OutputData": {
+      "type": "object",
+      "required": [
+        "log_messages",
+        "text"
+      ],
+      "properties": {
+        "log_messages": {
+          "type": "array",
+          "description": "Up to 50 messages logged with the request.",
+          "items": {
+            "$ref": "#/definitions/LogMessageResponse"
+          }
+        },
+        "text": {
+          "type": "array",
+          "description": "Responses to the user.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "nodes_visited": {
+          "type": "array",
+          "description": "The nodes that were executed to create the response.",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "SystemResponse": {
+      "type": "object",
+      "required": [
+        "dialog_stack",
+        "dialog_turn_counter",
+        "dialog_request_counter"
+      ],
+      "properties": {
+        "dialog_stack": {
+          "type": "array",
+          "description": "An array of dialog node IDs that are in focus in the conversation",
+          "items": {
+            "$ref": "#/definitions/DialogStack"
+          }
+        },
+        "dialog_turn_counter": {
+          "type": "integer",
+          "description": "The number of cycles of user input and response in this conversation.",
+          "maxItems": 1,
+          "minItems": 1
+        },
+        "dialog_request_counter": {
+          "type": "integer",
+          "description": "The number of inputs in this conversation. This counter might be higher than the <tt>dialog_turn_counter</tt> counter when multiple inputs are needed before a response can be returned.",
+          "maxItems": 1,
+          "minItems": 1
+        }
+      }
+    },
+    "DialogStack": {
+      "type": "object",
+      "description": "",
+      "properties": {
+        "dialog_node": {
+          "type": "string",
+          "description": "The dialog node ID"
+        }
+      }
+    },
+    "Error": {
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "code": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

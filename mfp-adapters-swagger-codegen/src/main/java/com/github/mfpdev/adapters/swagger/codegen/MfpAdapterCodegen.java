@@ -198,11 +198,11 @@ public class MfpAdapterCodegen extends JavaJerseyServerCodegen  {
       }
 
       if ( "joda".equals(dateLibrary) ) {
-          supportingFiles.add(new SupportingFile("JodaDateTimeProvider.mustache", (sourceFolder + "/src/main/java/" + apiPackage).replace(".", "/"), "JodaDateTimeProvider.java"));
-          supportingFiles.add(new SupportingFile("JodaLocalDateProvider.mustache", (sourceFolder + "/src/main/java/" + apiPackage).replace(".", "/"), "JodaLocalDateProvider.java"));
+          supportingFiles.add(new SupportingFile("JodaDateTimeProvider.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "JodaDateTimeProvider.java"));
+          supportingFiles.add(new SupportingFile("JodaLocalDateProvider.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "JodaLocalDateProvider.java"));
       } else if ( "java8".equals(dateLibrary) ) {
-          supportingFiles.add(new SupportingFile("LocalDateTimeProvider.mustache", (sourceFolder + "/src/main/java/" + apiPackage).replace(".", "/"), "LocalDateTimeProvider.java"));
-          supportingFiles.add(new SupportingFile("LocalDateProvider.mustache", (sourceFolder + "/src/main/java/" + apiPackage).replace(".", "/"), "LocalDateProvider.java"));
+          supportingFiles.add(new SupportingFile("LocalDateTimeProvider.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "LocalDateTimeProvider.java"));
+          supportingFiles.add(new SupportingFile("LocalDateProvider.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "LocalDateProvider.java"));
       }
   }
   
@@ -272,7 +272,7 @@ public class MfpAdapterCodegen extends JavaJerseyServerCodegen  {
   
       
   private String implFileFolder(String output) {
-      return outputFolder + "/src/main/java/" + output + "/" + apiPackage().replace('.', '/');
+      return outputFolder + "/" + output + "/src/main/java/" + apiPackage().replace('.', '/');
   }
 
   /**
@@ -292,7 +292,7 @@ public class MfpAdapterCodegen extends JavaJerseyServerCodegen  {
    */
   @Override
   public String modelFileFolder() {
-    return outputFolder + "/src/main/java/" + sourceFolder + "/" + modelPackage().replace('.', File.separatorChar);
+    return outputFolder + "/" + sourceFolder + "/src/main/java/" + modelPackage().replace('.', File.separatorChar);
   }
 
   /**
@@ -301,7 +301,7 @@ public class MfpAdapterCodegen extends JavaJerseyServerCodegen  {
    */
   @Override
   public String apiFileFolder() {
-    return outputFolder + "/src/main/java/" + sourceFolder + "/" + apiPackage().replace('.', File.separatorChar);
+    return outputFolder + "/" + sourceFolder + "/src/main/java/" + apiPackage().replace('.', File.separatorChar);
   }
   
   @Override
