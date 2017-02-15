@@ -21,6 +21,7 @@ import io.swagger.codegen.CodegenResponse;
 import io.swagger.codegen.CodegenSecurity;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.SupportingFile;
+import io.swagger.models.Operation;
 import io.swagger.codegen.languages.JavaJerseyServerCodegen;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
@@ -80,6 +81,7 @@ public class MfpAdapterCodegen extends JavaJerseyServerCodegen  {
 
     // set the output folder here
     outputFolder = "./java/main/generated";
+     dateLibrary = "joda";
 
     /**
      * Models.  You can write model files using the modelTemplateFiles map.
@@ -192,17 +194,21 @@ public class MfpAdapterCodegen extends JavaJerseyServerCodegen  {
       supportingFiles.add(new SupportingFile("ApiResponseMessage.mustache", (sourceFolder + "/src/main/java/" + apiPackage).replace(".", "/"), "ApiResponseMessage.java"));
       supportingFiles.add(new SupportingFile("NotFoundException.mustache", (sourceFolder + "/src/main/java/" + apiPackage).replace(".", "/"), "NotFoundException.java"));
       
-      if ( additionalProperties.containsKey("dateLibrary") ) {
+    //  additionalProperties.put(dateLibrary, "joda");
+
+      /*if ( additionalProperties.containsKey("dateLibrary") ) {
           setDateLibrary(additionalProperties.get("dateLibrary").toString());
           additionalProperties.put(dateLibrary, "true");
-      }
+      }*/
+     // System.out.println("****************************************");
+     // System.out.println(dateLibrary);
 
       if ( "joda".equals(dateLibrary) ) {
-          supportingFiles.add(new SupportingFile("JodaDateTimeProvider.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "JodaDateTimeProvider.java"));
-          supportingFiles.add(new SupportingFile("JodaLocalDateProvider.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "JodaLocalDateProvider.java"));
+          supportingFiles.add(new SupportingFile("JodaDateTimeProvider.mustache", (sourceFolder + "/src/main/java/" + apiPackage).replace(".", "/"), "JodaDateTimeProvider.java"));
+          supportingFiles.add(new SupportingFile("JodaLocalDateProvider.mustache", (sourceFolder + "/src/main/java/" + apiPackage).replace(".", "/"), "JodaLocalDateProvider.java"));
       } else if ( "java8".equals(dateLibrary) ) {
-          supportingFiles.add(new SupportingFile("LocalDateTimeProvider.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "LocalDateTimeProvider.java"));
-          supportingFiles.add(new SupportingFile("LocalDateProvider.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "LocalDateProvider.java"));
+          supportingFiles.add(new SupportingFile("LocalDateTimeProvider.mustache", (sourceFolder + "/src/main/java/" + apiPackage).replace(".", "/"), "LocalDateTimeProvider.java"));
+          supportingFiles.add(new SupportingFile("LocalDateProvider.mustache", (sourceFolder + "/src/main/java/" + apiPackage).replace(".", "/"), "LocalDateProvider.java"));
       }
   }
   

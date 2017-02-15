@@ -16,6 +16,10 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.*;
 
+import com.sun.jersey.multipart.*;
+import com.sun.jersey.core.header.*;
+import java.io.InputStream;
+
 import com.ibm.mfp.adapter.api.OAuthSecurity;
 
 {{#autowiredSpringService}}
@@ -62,19 +66,19 @@ public class {{classname}}  {
         @io.swagger.annotations.ApiResponse(code = {{{code}}}, message = "{{{message}}}", response = {{{returnType}}}.class{{#returnContainer}}, responseContainer = "{{{returnContainer}}}"{{/returnContainer}}){{#hasMore}},
         {{/hasMore}}{{/responses}} })
     {{#hasAuthMethods}}{{#authMethods}}{{#isOAuth}}{{#scopes.size}}@OAuthSecurity(enabled=true, scope="{{/scopes.size}}{{#scopes}}{{scope}}{{#hasMore}} {{/hasMore}}{{/scopes}}{{#scopes.size}}"){{/scopes.size}}{{/isOAuth}}{{/authMethods}}{{/hasAuthMethods}}{{^hasAuthMethods}}@OAuthSecurity(enabled=false){{/hasAuthMethods}}{{#hasAuthMethods}}{{^authMethods}}@OAuthSecurity(enabled=false){{/authMethods}}{{/hasAuthMethods}}   
-    public Response {{nickname}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}},{{/allParams}} @Context SecurityContext securityContext)
+    public Response {{nickname}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}},{{/hasMore}}{{/allParams}})
     throws NotFoundException{{#serviceFactoryClassname}}, ServiceFactoryFinderException{{/serviceFactoryClassname}} {
 
         //return get{{classname}}Service().{{nickname}}({{#allParams}}{{#isFile}}inputStream, fileDetail{{/isFile}}{{^isFile}}{{paramName}}{{/isFile}},{{/allParams}}securityContext);
 
-        io.swagger.client.api.{{classname}} apiInstance = new io.swagger.client.api.{{classname}}();
+        com.ibm.mfp.adapters.sample.api.{{#vendorExtensions.x-tags}}{{tag}}{{#hasMore}}{{/hasMore}}{{/vendorExtensions.x-tags}}Api apiInstance = new com.ibm.mfp.adapters.sample.api.{{#vendorExtensions.x-tags}}{{tag}}{{#hasMore}}{{/hasMore}}{{/vendorExtensions.x-tags}}Api();
          String retval = "NA";
-         io.swagger.client.model.{{{returnType}}} result = null;
+         com.ibm.mfp.adapters.sample.model.{{{returnType}}} result = null;
         try {
             System.out.println("Calling Node server.");
-            result = apiInstance.{{nickname}}();
+            result = apiInstance.{{nickname}}({{#allParams}}{{paramName}}{{#hasMore}},{{/hasMore}}{{/allParams}});
             System.out.println(result);
-        } catch (ApiException e) {
+        } catch (Exception e) {
             System.err.println("Exception when calling {{classname}}#{{nickname}}");
             e.printStackTrace();
         }

@@ -1,9 +1,9 @@
 {
-  "groupId": "com.ibm.watsonGetAdapter",
-  "artifactId": "watsonGetAdapter",
+  "groupId": "com.ibm.watsonConversationAdapter",
+  "artifactId": "watsonConversationAdapter",
   "additionalProperties": {
-    "serviceFactoryClassname": "watsonAdapterGetServiceFactory",
-    "adapterApplicationClassname": "watsonGetAdapterApplication"
+    "serviceFactoryClassname": "watsonConversationAdapterServiceFactory",
+    "adapterApplicationClassname": "watsonConversationAdapterApplication"
   },
   "artifactVersion": "1.2.0",
   "library": "feign"

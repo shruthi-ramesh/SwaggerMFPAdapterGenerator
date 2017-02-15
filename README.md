@@ -15,4 +15,4 @@ The generated adapter file will be available in ../generatedAdapter folder.
 The adapter binary needs to be built using ```mfpdev adapter build```.
 
 ** Conditions Apply
-* Currently working on for GET requests.
+* Currently working on for GET and POST requests.
